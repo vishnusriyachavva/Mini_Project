@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {Navigate, NavLink,useNavigate} from 'react-router-dom';
-import Admin from './Admin.js';
+
+import Axios from 'axios'
+import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 const Adminlogin = () => {
@@ -11,24 +13,37 @@ const Adminlogin = () => {
    const handle = () => {
       localStorage.setItem('Name', name);
       localStorage.setItem('Password', pwd);
-      nav('Admin')
+      Axios.post(`http://localhost:8080/chec/${name}`).then((res) => {
+      //console.log(res)
+          if(res.data=="1"){
+            nav('AdminNav')
+          }
+          else{
+             alert("Unknown user")
+          }
+        });
+     
    };
-   const remove = () => {
-      localStorage.removeItem('Name');
-      localStorage.removeItem('Password');
+   const signup = () => {
+      Axios.post("http://localhost:8080/signup",{name,pwd})
+      .then(()=>
+         {
+            alert("SuccessFull");
+         }
+      )
    };
    return (
       <center>
          <br></br><br></br><br></br><br></br><br></br>
          <div className="App">
-         <h2>Admin Username :</h2><br></br>
+         <Form.Label>Admin_Username</Form.Label><br></br>
          <input
             placeholder="Name"
             value={name}
             className="form-control-lg"
             onChange={(e) => setName(e.target.value)}
-         /><br></br><br></br><br></br>
-         <h2>Password :</h2><br></br>
+         /><br></br><br></br>
+         <Form.Label>Password</Form.Label><br></br>
          <input
             type="password"
             placeholder="Password"
@@ -38,8 +53,9 @@ const Adminlogin = () => {
          />
          <div><br>
          </br><br></br>
-            <button onClick={handle} className="btn-dark">Submit</button>
+         <button type="button" onClick={handle} class="btn btn-outline-secondary">Login</button>
          </div>
+         <br></br>if new user please signup  <button type="button" onClick={signup} class="btn btn-outline-secondary">Signup</button>
       </div>
       </center>
    );

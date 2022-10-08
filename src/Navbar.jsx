@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navigate, NavLink,useNavigate} from 'react-router-dom';
-import './stylex.css'
+
 const Navbar = () => {
     // const nav=useNavigate()
     // const logout=()=>{

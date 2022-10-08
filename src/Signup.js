@@ -2,7 +2,11 @@ import React from 'react';
 import {NavLink,Outlet} from 'react-router-dom';
 import {useState} from 'react'
 import StudentNav from './StudentNav';
-
+import Axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 const Signup = () => {
     
             
@@ -30,6 +34,14 @@ const inputhandle=(e)=>{
     console.log(login.pass);
   };
 
+  const handle=()=>{
+    Axios.post("http://localhost:8080/insert",login)
+    .then(()=>
+       {
+          alert("SuccessFull");
+       }
+    )
+  }
   return (
     
     <div align="center"> 
@@ -37,7 +49,7 @@ const inputhandle=(e)=>{
     <br></br><br></br>
     <h1>Student Details Form</h1>
     <br></br><br></br>
-    <form onSubmit={submit} className="card">
+    <form onSubmit={submit} className="mb-4">
         
          <input type="text"
          name="named"
@@ -74,11 +86,11 @@ const inputhandle=(e)=>{
          value={login.hostel}
          className="form-control-lg"
         onChange={inputhandle}
-         /><br></br>
+         /><br></br><br></br>
          <table>
            <tr>
              <td>
-             <input type="radio"
+             <input type="date"
          
          name="ge"
          value={login.ge}
@@ -87,20 +99,7 @@ const inputhandle=(e)=>{
          
          />
              </td>
-             <td><p>Hostler</p></td>
-             <td>
-             <input type="radio"
-         
-         name="ge"
-         value={login.ge}
-        
-        onChange={inputhandle}
-         
-         />
-             </td>
-             <td>
-             <p>Day scholar</p>
-             </td>
+             
            </tr>
          </table>
          
@@ -109,7 +108,7 @@ const inputhandle=(e)=>{
          
          
          <br/>
-         <button>Register</button>
+         <button onClick={handle} class="btn btn-outline-secondary">Register</button>
          </form>
     </div>
   )
